@@ -16,10 +16,10 @@ Please refer to the JUnit integration test cases in the com.mambu.aha.service pa
 Installation
 ------------
 
-# Add the latest jar under https://github.com/mambu-gmbh/aha-client-java/blob/master/build/aha-0.0.1-SNAPSHOT.jar to your classpath
-# Add libs from https://github.com/mambu-gmbh/aha-client-java/blob/master/target/lib to your classpath
-# Copy src/test/resources/aha.properties to your classpath
-# Poplulate aha.properties with your Aha! settings
+*   Add the latest jar under https://github.com/mambu-gmbh/aha-client-java/blob/master/build/aha-0.0.1-SNAPSHOT.jar to your classpath
+*   Add libs from https://github.com/mambu-gmbh/aha-client-java/blob/master/target/lib to your classpath
+*   Copy src/test/resources/aha.properties to your classpath
+*   Poplulate aha.properties with your Aha! settings
 
 
 Dependencies
