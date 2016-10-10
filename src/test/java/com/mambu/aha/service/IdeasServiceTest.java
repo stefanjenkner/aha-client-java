@@ -25,20 +25,20 @@ public class IdeasServiceTest extends BaseTest {
 				"name,reference_num,workflow_status,feature,description");
 
 		// assertions
-		assertTrue(ideas.size() > 1);
-		assertNotNull(ideas.get(0).getId());
-		assertNotNull(ideas.get(0).getName());
-		assertNotNull(ideas.get(0).getReferenceNum());
-		assertNotNull(ideas.get(0).getFeature());
-		assertNotNull(ideas.get(0).getFeature().getId());
-		assertNotNull(ideas.get(0).getFeature().getName());
-		assertNotNull(ideas.get(0).getFeature().getReferenceNum());
-		assertNotNull(ideas.get(0).getWorkflowStatus());
-		assertNotNull(ideas.get(0).getWorkflowStatus().getId());
-		assertNotNull(ideas.get(0).getWorkflowStatus().getName());
-		assertNotNull(ideas.get(0).getDescription());
-		assertNotNull(ideas.get(0).getDescription().getId());
-		assertNotNull(ideas.get(0).getDescription().getBody());
+		assertTrue(ideas.size() > 2);
+		assertNotNull(ideas.get(1).getId());
+		assertNotNull(ideas.get(1).getName());
+		assertNotNull(ideas.get(1).getReferenceNum());
+		assertNotNull(ideas.get(1).getFeature()); // idea with index 1 has a associated feature
+		assertNotNull(ideas.get(1).getFeature().getId());
+		assertNotNull(ideas.get(1).getFeature().getName());
+		assertNotNull(ideas.get(1).getFeature().getReferenceNum());
+		assertNotNull(ideas.get(1).getWorkflowStatus());
+		assertNotNull(ideas.get(1).getWorkflowStatus().getId());
+		assertNotNull(ideas.get(1).getWorkflowStatus().getName());
+		assertNotNull(ideas.get(1).getDescription());
+		assertNotNull(ideas.get(1).getDescription().getId());
+		assertNotNull(ideas.get(1).getDescription().getBody());
 
 	}
 

@@ -14,7 +14,7 @@ import com.mambu.aha.model.Releases;
 public class ReleasesService extends AbstractService {
 
 	/**
-	 * Gets the first 200 releases of a product, for details see
+	 * Gets the first 1000 releases of a product, for details see
 	 * https://www.aha.io/api/resources#Get%20a%20list%20of%20all%20of%20the%20releases%20in%20a%20product
 	 * 
 	 * @param product
@@ -29,8 +29,10 @@ public class ReleasesService extends AbstractService {
 
 		HashMap<String, String> requestParams = new HashMap<String, String>();
 		requestParams.put("fields", fields);
+		requestParams.put("per_page", "1000"); // default is 30
 
-		return getEntity(genericType, "products/" + product + "/releases", requestParams).getReleases();
+		return getEntity(genericType, "products/" + product + "/releases", requestParams)
+				.getReleases();
 
 	}
 }

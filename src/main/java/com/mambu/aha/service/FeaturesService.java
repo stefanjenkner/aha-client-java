@@ -16,7 +16,7 @@ import com.mambu.aha.model.Features;
 public class FeaturesService extends AbstractService {
 
 	/**
-	 * Gets the first 200 features filtered by a tag and release, for details see
+	 * Gets the first 1000 features filtered by a tag and release, for details see
 	 * https://www.aha.io/api/resources#Find%20features%20matching%20a%20tag and
 	 * https://www.aha.io/api/resources#Get%20a%20list%20of%20features%20for%20a%20release
 	 * 
@@ -35,6 +35,7 @@ public class FeaturesService extends AbstractService {
 		HashMap<String, String> requestParams = new HashMap<String, String>();
 		requestParams.put("tag", tag);
 		requestParams.put("fields", fields);
+		requestParams.put("per_page", "1000"); // default 30
 
 		return getEntity(genericType, "releases/" + release + "/features", requestParams).getFeatures();
 

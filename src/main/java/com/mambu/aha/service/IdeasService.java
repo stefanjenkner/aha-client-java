@@ -16,7 +16,7 @@ import com.mambu.aha.model.Ideas;
 public class IdeasService extends AbstractService {
 
 	/**
-	 * Gets the first 200 ideas filtered by a tag, for details see
+	 * Gets the first 1000 ideas filtered by a tag, for details see
 	 * https://www.aha.io/api/resources#Find%20ideas%20matching%20a%20tag
 	 * 
 	 * @param tag
@@ -30,6 +30,7 @@ public class IdeasService extends AbstractService {
 		HashMap<String, String> requestParams = new HashMap<String, String>();
 		requestParams.put("tag", tag);
 		requestParams.put("fields", fields);
+		requestParams.put("per_page", "1000"); // default is 30
 		return getEntity(genericType, "ideas", requestParams).getIdeas();
 	}
 
