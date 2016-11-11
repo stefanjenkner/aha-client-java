@@ -47,7 +47,7 @@ public abstract class AbstractService {
 	protected <T> T getEntity(GenericType<T> responseType, String relativePath, Map<String, String> requestParams) {
 
 		WebTarget target = getTarget(relativePath, requestParams);
-
+		
 		Builder builder = getBuilder(target);
 
 		T response = builder.get(responseType);
