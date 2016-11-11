@@ -3,6 +3,7 @@ package com.mambu.aha.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -22,24 +23,40 @@ public class IdeasServiceTest extends BaseTest {
 
 		// method under test
 		List<Idea> ideas = ideasService.getIdeasByTag(properties.getProperty("tag"),
-				"name,reference_num,workflow_status,feature,description");
-
-		// assertions
+				"name,reference_num,workflow_status,feature,description,visibility");
+		
 		assertTrue(ideas.size() > 2);
-		assertNotNull(ideas.get(1).getId());
-		assertNotNull(ideas.get(1).getName());
-		assertNotNull(ideas.get(1).getReferenceNum());
-		assertNotNull(ideas.get(1).getFeature()); // idea with index 1 has a associated feature
-		assertNotNull(ideas.get(1).getFeature().getId());
-		assertNotNull(ideas.get(1).getFeature().getName());
-		assertNotNull(ideas.get(1).getFeature().getReferenceNum());
-		assertNotNull(ideas.get(1).getWorkflowStatus());
-		assertNotNull(ideas.get(1).getWorkflowStatus().getId());
-		assertNotNull(ideas.get(1).getWorkflowStatus().getName());
-		assertNotNull(ideas.get(1).getDescription());
-		assertNotNull(ideas.get(1).getDescription().getId());
-		assertNotNull(ideas.get(1).getDescription().getBody());
-
+		
+		Idea testIdea = null;
+		for(int i = 0;i < ideas.size(); i++){
+			
+			if(ideas.get(i).getFeature() != null){
+				testIdea = ideas.get(i);
+								
+				assertNotNull(testIdea.getId());
+				assertNotNull(testIdea.getName());
+				assertNotNull(testIdea.getReferenceNum());
+				assertNotNull(testIdea.getVisibility());				
+				assertNotNull(testIdea.getFeature());
+				assertNotNull(testIdea.getFeature().getId());
+				assertNotNull(testIdea.getFeature().getName());
+				assertNotNull(testIdea.getFeature().getReferenceNum());
+				assertNotNull(testIdea.getWorkflowStatus());
+				assertNotNull(testIdea.getWorkflowStatus().getId());
+				assertNotNull(testIdea.getWorkflowStatus().getName());
+				assertNotNull(testIdea.getDescription());
+				assertNotNull(testIdea.getDescription().getId());
+				assertNotNull(testIdea.getDescription().getBody());
+				
+				//testing ones is sufficient
+				break;
+			}		
+		}
+		
+		//acceptance check: at least one idea must have been completely tested
+		if(testIdea == null){
+			fail("Could not test idea, due to the provided testdata. No feature for an idea found.");
+		}
 	}
 
 	@Test
@@ -47,13 +64,14 @@ public class IdeasServiceTest extends BaseTest {
 
 		// method under test
 		Idea idea = ideasService.getIdeaById(properties.getProperty("ideaId"),
-				"name,reference_num,workflow_status,feature,description");
-
+				"name,reference_num,workflow_status,feature,description,visibility");
+		
 		// assertions
 		assertNotNull(idea);
 		assertEquals(properties.getProperty("ideaId"), idea.getId());
 		assertNotNull(idea.getName());
 		assertNotNull(idea.getReferenceNum());
+		assertNotNull(idea.getVisibility());
 		assertNotNull(idea.getFeature());
 		assertNotNull(idea.getFeature().getId());
 		assertNotNull(idea.getFeature().getName());

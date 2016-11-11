@@ -19,6 +19,9 @@ public class Idea {
 
 	@XmlElement(name = "workflow_status")
 	private WorkflowStatus workflowStatus;
+	
+	@XmlElement(name = "visibility")
+	private String visibility;
 
 	private Feature feature;
 
@@ -128,5 +131,19 @@ public class Idea {
 	public void setDescription(Description description) {
 		this.description = description;
 	}
-
+	
+	/**
+	 * @return the visibility
+	 */
+	public String getVisibility() {
+		return visibility;
+	}
+	
+	/**
+	 * @param visibility
+	 * 				the visibility to set
+	 */
+	public void setVisibility(String visibility) {
+		this.visibility = visibility;
+	}
 }
