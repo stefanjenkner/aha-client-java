@@ -16,14 +16,36 @@ import com.mambu.aha.model.Feature;
 public class FeaturesServiceTest extends BaseTest {
 
 	private FeaturesService featuresService = new FeaturesService();
-
+	
+	@Test
+	public void givenTagWhenGetFeaturesByTagThenReturnFeatures() {
+		
+		// setup
+		String tag = properties.getProperty("tag");
+		
+		// execute
+		List<Feature> features =  featuresService.getFeaturesByTag(tag, "name,reference_num,workflow_status,ideas,description");
+		
+		// verify
+		assertTrue(features.size() > 1);
+		assertNotNull(features.get(0).getId());
+		assertNotNull(features.get(0).getName());
+		assertNotNull(features.get(0).getReferenceNum());
+		assertNotNull(features.get(0).getWorkflowStatus());
+		assertNotNull(features.get(0).getWorkflowStatus().getId());
+		assertNotNull(features.get(0).getWorkflowStatus().getName());
+		assertNotNull(features.get(0).getDescription());
+		assertNotNull(features.get(0).getDescription().getId());
+		assertNotNull(features.get(0).getDescription().getBody());
+	}
+	
 	@Test
 	public void testGetFeaturesByTagAndRelease() {
 
 		// method under test
 		List<Feature> features = featuresService.getFeaturesByTagAndRelease(properties.getProperty("tag"),
 				properties.getProperty("release"), "name,reference_num,workflow_status,ideas,description");
-
+				
 		// assertions
 		assertTrue(features.size() > 1);
 		assertNotNull(features.get(0).getId());

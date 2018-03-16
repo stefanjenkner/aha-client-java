@@ -40,6 +40,32 @@ public class FeaturesService extends AbstractService {
 		return getEntity(genericType, "releases/" + release + "/features", requestParams).getFeatures();
 
 	}
+	
+	/**
+	 * Gets the first 1000 features filtered by a tag, for details see
+	 * https://www.aha.io/api/resources#Find%20features%20matching%20a%20tag
+	 * 
+	 * @param tag
+	 *            a tag to filter features by
+	 * @param release
+	 *            Numeric ID, or key of the release to retrieve features for
+	 * @param fields
+	 *            a comma separated list of fields that are required in the response, use "*" for all fields
+	 * @return list of features with requested fields and sub-resources
+	 */
+	public List<Feature> getFeaturesByTag(String tag, String fields) {
+
+		GenericType<Features> genericType = new GenericType<Features>() {};
+
+		HashMap<String, String> requestParams = new HashMap<String, String>();
+		requestParams.put("tag", tag);
+		requestParams.put("fields", fields);
+		requestParams.put("per_page", "1000"); // default 30
+
+		return getEntity(genericType, "features", requestParams).getFeatures();
+
+	}
+	
 
 	/**
 	 * Gets the feature by id
