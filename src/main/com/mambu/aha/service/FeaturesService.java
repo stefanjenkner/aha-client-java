@@ -47,8 +47,6 @@ public class FeaturesService extends AbstractService {
 	 * 
 	 * @param tag
 	 *            a tag to filter features by
-	 * @param release
-	 *            Numeric ID, or key of the release to retrieve features for
 	 * @param fields
 	 *            a comma separated list of fields that are required in the response, use "*" for all fields
 	 * @return list of features with requested fields and sub-resources
