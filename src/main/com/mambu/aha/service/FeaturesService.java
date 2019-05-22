@@ -19,7 +19,7 @@ public class FeaturesService extends AbstractService {
 	 * Gets the first 1000 features filtered by a tag and release, for details see
 	 * https://www.aha.io/api/resources#Find%20features%20matching%20a%20tag and
 	 * https://www.aha.io/api/resources#Get%20a%20list%20of%20features%20for%20a%20release
-	 * 
+	 *
 	 * @param tag
 	 *            a tag to filter features by
 	 * @param release
@@ -40,11 +40,11 @@ public class FeaturesService extends AbstractService {
 		return getEntity(genericType, "releases/" + release + "/features", requestParams).getFeatures();
 
 	}
-	
+
 	/**
 	 * Gets the first 1000 features filtered by a tag, for details see
 	 * https://www.aha.io/api/resources#Find%20features%20matching%20a%20tag
-	 * 
+	 *
 	 * @param tag
 	 *            a tag to filter features by
 	 * @param fields
@@ -63,11 +63,11 @@ public class FeaturesService extends AbstractService {
 		return getEntity(genericType, "features", requestParams).getFeatures();
 
 	}
-	
+
 
 	/**
 	 * Gets the feature by id
-	 * 
+	 *
 	 * @param featureId
 	 *            aha feature id
 	 * @param fields

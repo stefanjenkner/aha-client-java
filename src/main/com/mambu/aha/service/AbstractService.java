@@ -9,8 +9,11 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.logging.LoggingFeature;
+import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
 
 import com.mambu.aha.util.PropertiesUtil;
 
@@ -19,78 +22,75 @@ import com.mambu.aha.util.PropertiesUtil;
  */
 public abstract class AbstractService {
 
-	private static final String PER_PAGE_PARAMETER = "per_page";
+    private static final String PER_PAGE_PARAMETER = "per_page";
 
-	private static final String MAX_NUM_ITEMS_PER_PAGE = "200";
+    private static final String MAX_NUM_ITEMS_PER_PAGE = "200";
 
-	// holds Aha! account and authentication settings
-	private static final String PROPERTIES_FILE_NAME = "aha.properties";
+    // holds Aha! account and authentication settings
+    private static final String PROPERTIES_FILE_NAME = "aha.properties";
 
-	private static final MediaType MEDIA_TYPE_JSON_UTF8 = new MediaType("application", "json", "utf-8");
+    private static final MediaType MEDIA_TYPE_JSON_UTF8 = new MediaType("application", "json", "utf-8");
 
-	private Client client = ClientBuilder.newClient(new ClientConfig());
+    private final ClientConfig config = new ClientConfig().register(LoggingFeature.class);
+    private final Client client = ClientBuilder.newClient(config).register(MoxyJsonFeature.class);
 
-	Properties properties = PropertiesUtil.getProperties(PROPERTIES_FILE_NAME);
+    private final Properties properties = PropertiesUtil.getProperties(PROPERTIES_FILE_NAME);
 
-	/**
-	 * Performs a GET request to Aha's REST API using the given relative path and request parameters
-	 * 
-	 * @param responseType
-	 *            the expected response class wrapped in a {@link GenericType}
-	 * @param relativePath
-	 *            the relative path that follows the base path, e.g. "ideas" or "releases/123/features"
-	 * @param requestParams
-	 *            additional request parameters with key being the parameter key and value the parameter value, e.g.
-	 *            ["tag"="api", "fields"="id,reference_num,description"]
-	 * @return parsed response
-	 */
-	protected <T> T getEntity(GenericType<T> responseType, String relativePath, Map<String, String> requestParams) {
+    /**
+     * Performs a GET request to Aha's REST API using the given relative path and request parameters
+     *
+     * @param responseType  the expected response class wrapped in a {@link GenericType}
+     * @param relativePath  the relative path that follows the base path, e.g. "ideas" or "releases/123/features"
+     * @param requestParams additional request parameters with key being the parameter key and value the parameter value, e.g.
+     *                      ["tag"="api", "fields"="id,reference_num,description"]
+     * @return parsed response
+     */
+    protected <T> T getEntity(GenericType<T> responseType, String relativePath, Map<String, String> requestParams) {
 
-		WebTarget target = getTarget(relativePath, requestParams);
-		
-		Builder builder = getBuilder(target);
+        WebTarget target = getTarget(relativePath, requestParams);
+        Builder builder = getBuilder(target);
 
-		T response = builder.get(responseType);
+        Response response = builder.get();
 
-		return response;
-	}
+        return response.readEntity(responseType);
+    }
 
-	private Builder getBuilder(WebTarget target) {
+    private Builder getBuilder(WebTarget target) {
 
-		String authToken = properties.getProperty("authToken");
+        String authToken = properties.getProperty("authToken");
 
-		Builder builder = target.request(MEDIA_TYPE_JSON_UTF8).header("Authorization", "Bearer " + authToken);
+        Builder builder = target.request(MEDIA_TYPE_JSON_UTF8).header("Authorization", "Bearer " + authToken);
 
-		return builder;
+        return builder;
 
-	}
+    }
 
-	private WebTarget getTarget(String path, Map<String, String> requestParams) {
+    private WebTarget getTarget(String path, Map<String, String> requestParams) {
 
-		String baseUrl = getBaseUrl();
+        String baseUrl = getBaseUrl();
 
-		WebTarget target = client.target(baseUrl).path(path);
+        WebTarget target = client.target(baseUrl).path(path);
 
-		for (String key : requestParams.keySet()) {
-			target = target.queryParam(key, requestParams.get(key));
-		}
+        for (String key : requestParams.keySet()) {
+            target = target.queryParam(key, requestParams.get(key));
+        }
 
-		target.queryParam(PER_PAGE_PARAMETER, MAX_NUM_ITEMS_PER_PAGE);
+        target.queryParam(PER_PAGE_PARAMETER, MAX_NUM_ITEMS_PER_PAGE);
 
-		return target;
+        return target;
 
-	}
+    }
 
-	private String getBaseUrl() {
+    private String getBaseUrl() {
 
-		String protocol = properties.getProperty("protocol");
-		String subdomain = properties.getProperty("subdomain");
-		String baseDomain = properties.getProperty("baseDomain");
-		String basePath = properties.getProperty("basePath");
+        String protocol = properties.getProperty("protocol");
+        String subdomain = properties.getProperty("subdomain");
+        String baseDomain = properties.getProperty("baseDomain");
+        String basePath = properties.getProperty("basePath");
 
-		String baseUrl = protocol + "://" + subdomain + "." + baseDomain + basePath;
+        String baseUrl = protocol + "://" + subdomain + "." + baseDomain + basePath;
 
-		return baseUrl;
+        return baseUrl;
 
-	}
+    }
 }
