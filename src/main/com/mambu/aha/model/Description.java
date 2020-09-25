@@ -1,5 +1,9 @@
 package com.mambu.aha.model;
 
+import java.util.Date;
+
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * Sub-resource used e.g. in features and ideas
  */
@@ -8,6 +12,9 @@ public class Description {
 	private String id;
 
 	private String body;
+
+	@XmlElement(name = "created_at")
+	private Date createdAt;
 
 	/**
 	 * @return the id
@@ -39,4 +46,18 @@ public class Description {
 		this.body = body;
 	}
 
+	/**
+	 * @return the creation date
+	 */
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	/**
+	 * @param createdAt
+	 *            the creation date to set
+	 */
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 }

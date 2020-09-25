@@ -1,5 +1,7 @@
 package com.mambu.aha.model;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlElement;
 
 /**
@@ -11,11 +13,18 @@ public class Idea {
 
 	private String name;
 
+	@XmlElement(name = "created_at")
+	private Date createdAt;
+
 	@XmlElement(name = "reference_num")
 	private String referenceNum;
 
+	private Integer score;
+
 	@XmlElement(name = "product_id")
 	private String productId;
+
+	private Integer votes;
 
 	@XmlElement(name = "workflow_status")
 	private WorkflowStatus workflowStatus;
@@ -58,6 +67,21 @@ public class Idea {
 	}
 
 	/**
+	 * @return the creation date
+	 */
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	/**
+	 * @param createdAt
+	 *            the creation date to set
+	 */
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	/**
 	 * @return the referenceNum
 	 */
 	public String getReferenceNum() {
@@ -73,6 +97,21 @@ public class Idea {
 	}
 
 	/**
+	 * @return the score
+	 */
+	public Integer getScore() {
+		return score;
+	}
+
+	/**
+	 * @param score
+	 *            the score to set
+	 */
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	/**
 	 * @return the productId
 	 */
 	public String getProductId() {
@@ -85,6 +124,21 @@ public class Idea {
 	 */
 	public void setProductId(String productId) {
 		this.productId = productId;
+	}
+
+	/**
+	 * @return the votes
+	 */
+	public Integer getVotes() {
+		return votes;
+	}
+
+	/**
+	 * @param votes
+	 *            the votes to set
+	 */
+	public void setVotes(Integer votes) {
+		this.votes = votes;
 	}
 
 	/**
